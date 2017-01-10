@@ -33,3 +33,4 @@ if [ $(which pngquant 2>/dev/null) ]; then
 fi
 
 mv ${tmp_dir}/out.png $out
+echo "Done."

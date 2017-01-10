@@ -92,7 +92,7 @@ page.onCallback = function(data) {
     height: rect.height * scale
   };
 
-  console.log('Saving screenshot to ' + imagePath + '...');
+  console.log('Saving screenshot...');
   page.render(imagePath);
   exit(0);
 };
