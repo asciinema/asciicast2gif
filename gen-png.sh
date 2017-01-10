@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # usage:
 # .gen-png.sh path/or/url/to/asciicast.json path/to/output.png seconds-in
