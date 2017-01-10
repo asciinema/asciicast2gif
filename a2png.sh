@@ -11,8 +11,11 @@ in=$1
 out=$2
 time=$3
 
+a2png_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 phantomjs \
-  a2png.js \
+  ${a2png_dir}/a2png.js \
+  ${a2png_dir} \
   $in \
   $out \
   npt:$time \

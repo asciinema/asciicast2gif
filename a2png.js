@@ -9,12 +9,13 @@ if (system.args.length < 4) {
   exit(1);
 }
 
-var pageUrl = "a2png.html";
-var jsonUrl = system.args[1];
-var imagePath = system.args[2];
-var poster = system.args[3];
-var scale = parseInt(system.args[4], 10);
+var a2pngDir = system.args[1];
+var jsonUrl = system.args[2];
+var imagePath = system.args[3];
+var poster = system.args[4];
+var scale = parseInt(system.args[5], 10);
 var localServerPort = 4444;
+var pageUrl = a2pngDir + '/a2png.html';
 
 var page = require('webpage').create();
 page.settings.localToRemoteUrlAccessEnabled = true;
