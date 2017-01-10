@@ -102,7 +102,6 @@ page.open(pageUrl, function(status) {
 
   var rect = page.evaluate(function(jsonUrl, poster) {
     var opts = {
-      preload: true,
       poster: poster,
       onCanPlay: function() {
         setTimeout(function() { // wait for terminal to resize and poster to render
