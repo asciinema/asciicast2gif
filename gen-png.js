@@ -51,8 +51,7 @@ function exit(code) {
     server.close();
   }
 
-  var code = code === undefined ? 0 : code;
-  phantom.exit(code);
+  phantom.exit(code === undefined ? 0 : code);
 }
 
 page.onConsoleMessage = function(msg) {
