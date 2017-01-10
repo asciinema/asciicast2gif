@@ -24,7 +24,7 @@ page.zoomFactor = scale;
 var server;
 
 if (!(/^https?:\/\//.test(jsonUrl))) {
-  console.log('Input is local file, starting server...');
+  console.log('Input is local file, starting server on port ' + localServerPort + '...');
 
   var path = jsonUrl;
   jsonUrl = "http://localhost:" + localServerPort + "/";
