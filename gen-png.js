@@ -23,6 +23,15 @@ page.zoomFactor = scale;
 
 var server;
 
+function exit(code) {
+  if (server) {
+    console.log('Shutting down local server...');
+    server.close();
+  }
+
+  phantom.exit(code === undefined ? 0 : code);
+}
+
 if (!(/^https?:\/\//.test(jsonUrl))) {
   console.log('Input is local file, starting server on port ' + localServerPort + '...');
 
@@ -30,7 +39,7 @@ if (!(/^https?:\/\//.test(jsonUrl))) {
   jsonUrl = "http://localhost:" + localServerPort + "/";
 
   server = require('webserver').create();
-  server.listen(localServerPort, function(request, response) {
+  var ok = server.listen(localServerPort, function(request, response) {
     try {
       response.statusCode = 200;
       response.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -43,15 +52,12 @@ if (!(/^https?:\/\//.test(jsonUrl))) {
       response.close();
     }
   });
-}
 
-function exit(code) {
-  if (server) {
-    console.log('Shutting down local server...');
-    server.close();
+  if (!ok) {
+    console.log("Couldn't start server. Port taken?");
+    server = null;
+    exit(1);
   }
-
-  phantom.exit(code === undefined ? 0 : code);
 }
 
 page.onConsoleMessage = function(msg) {
