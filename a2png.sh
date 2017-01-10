@@ -15,18 +15,21 @@ time=$3
 
 a2png_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'a2png-tmp')
+trap 'rm -rf $tmp_dir' EXIT
+
 phantomjs \
     ${a2png_dir}/a2png.js \
     ${a2png_dir} \
     $in \
-    out.png \
+    ${tmp_dir}/out.png \
     npt:$time \
     2
 
 if [ $(which pngquant 2>/dev/null) ]; then
     echo "Optimizing PNG with pngquant..."
-    pngquant 24 --ext q.png out.png
-    mv outq.png out.png
+    pngquant 24 --ext q.png ${tmp_dir}/out.png
+    mv ${tmp_dir}/outq.png ${tmp_dir}/out.png
 fi
 
-mv out.png $out
+mv ${tmp_dir}/out.png $out
