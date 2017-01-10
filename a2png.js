@@ -9,7 +9,7 @@ if (system.args.length < 4) {
   exit(1);
 }
 
-var pageUrl = "gen-png.html";
+var pageUrl = "a2png.html";
 var jsonUrl = system.args[1];
 var imagePath = system.args[2];
 var poster = system.args[3];
