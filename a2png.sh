@@ -13,7 +13,18 @@ in=$1
 out=$2
 time=$3
 
+player_version=v2.4.0
 a2png_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ ! -f "${a2png_dir}/asciinema-player.js" ]; then
+    echo "asciinema-player.js missing, downloading ..."
+    $(cd $a2png_dir; wget -q --show-progress https://github.com/asciinema/asciinema-player/releases/download/${player_version}/asciinema-player.js)
+fi
+
+if [ ! -f "${a2png_dir}/asciinema-player.css" ]; then
+    echo "asciinema-player.css missing, downloading ..."
+    $(cd $a2png_dir; wget -q --show-progress https://github.com/asciinema/asciinema-player/releases/download/${player_version}/asciinema-player.css)
+fi
 
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'a2png-tmp')
 trap 'rm -rf $tmp_dir' EXIT
