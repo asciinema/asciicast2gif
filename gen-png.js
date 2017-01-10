@@ -92,7 +92,7 @@ page.onCallback = function(data) {
   exit(0);
 };
 
-console.log('Fetching asciicast...');
+console.log('Loading player page...');
 
 page.open(pageUrl, function(status) {
   if (status !== "success") {
