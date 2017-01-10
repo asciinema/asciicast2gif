@@ -19,6 +19,14 @@ phantomjs \
   ${a2png_dir}/a2png.js \
   ${a2png_dir} \
   $in \
-  $out \
+  out.png \
   npt:$time \
   2
+
+if [ $(which pngquant 2>/dev/null) ]; then
+  echo "Optimizing PNG with pngquant..."
+  pngquant 24 --ext q.png out.png
+  mv outq.png out.png
+fi
+
+mv out.png $out
