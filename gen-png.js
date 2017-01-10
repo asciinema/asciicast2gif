@@ -93,7 +93,6 @@ page.onCallback = function(data) {
 
   console.log('Saving screenshot to ' + imagePath + '...');
   page.render(imagePath);
-  console.log('Done.');
   exit(0);
 };
 
