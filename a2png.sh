@@ -7,6 +7,8 @@
 #   ./a2png.sh https://asciinema.org/a/42383.json output.png 78
 #   ./a2png.sh demo.json output.png 10.5
 
+set -e
+
 in=$1
 out=$2
 time=$3
