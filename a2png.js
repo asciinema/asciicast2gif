@@ -110,7 +110,7 @@ page.open(pageUrl, function(status) {
       var opts = {
         poster: poster,
         onCanPlay: function() {
-          setTimeout(function() { // wait for terminal to resize and poster to render
+          setTimeout(function() { // let terminal resize and poster render
             var elements = document.querySelectorAll('.asciinema-player');
 
             if (elements.length > 0) {
