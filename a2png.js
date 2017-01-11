@@ -3,17 +3,16 @@
 var system = require('system');
 var fs = require('fs');
 
-if (system.args.length < 4) {
-  console.log("usage: " + system.args[0] + " <asciicast-url> <image-path> <poster> <scale>");
-  console.log("   ex: " + system.args[0] + " demo.json shot.png npt:10 2");
-  exit(1);
-}
-
 var a2pngDir = system.args[1];
 var jsonUrl = system.args[2];
 var imagePath = system.args[3];
 var poster = system.args[4];
-var scale = parseInt(system.args[5], 10);
+
+var theme = system.env['THEME'];
+var scale = parseInt(system.env['SCALE'], 10);
+var width = system.env['WIDTH'] || null;
+var height = system.env['HEIGHT'] || null;
+
 var localServerPort = 4444;
 var pageUrl = a2pngDir + '/a2png.html';
 
@@ -105,10 +104,13 @@ page.open(pageUrl, function(status) {
     exit(1);
   }
 
-  var rect = page.evaluate(function(jsonUrl, poster) {
+  var rect = page.evaluate(function(jsonUrl, poster, theme, width, height) {
     function initPlayer() {
       var opts = {
         poster: poster,
+        theme: theme,
+        width: width,
+        height: height,
         onCanPlay: function() {
           setTimeout(function() { // let terminal resize and poster render
             var elements = document.querySelectorAll('.asciinema-player');
@@ -133,7 +135,7 @@ page.open(pageUrl, function(status) {
       },
       timeout: 1000
     });
-  }, jsonUrl, poster);
+  }, jsonUrl, poster, theme, width, height);
 });
 
 // vim: ft=javascript
