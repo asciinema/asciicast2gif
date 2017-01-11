@@ -106,22 +106,33 @@ page.open(pageUrl, function(status) {
   }
 
   var rect = page.evaluate(function(jsonUrl, poster) {
-    var opts = {
-      poster: poster,
-      onCanPlay: function() {
-        setTimeout(function() { // wait for terminal to resize and poster to render
-          var elements = document.querySelectorAll('.asciinema-player');
+    function initPlayer() {
+      var opts = {
+        poster: poster,
+        onCanPlay: function() {
+          setTimeout(function() { // wait for terminal to resize and poster to render
+            var elements = document.querySelectorAll('.asciinema-player');
 
-          if (elements.length > 0) {
-            window.callPhantom({ rect: elements[0].getBoundingClientRect() });
-          } else {
-            window.callPhantom({ rect: undefined });
-          }
-        }, 10);
-      }
-    };
+            if (elements.length > 0) {
+              window.callPhantom({ rect: elements[0].getBoundingClientRect() });
+            } else {
+              window.callPhantom({ rect: undefined });
+            }
+          }, 10);
+        }
+      };
 
-    asciinema.player.js.CreatePlayer('player', jsonUrl, opts);
+      asciinema.player.js.CreatePlayer('player', jsonUrl, opts);
+    }
+
+    FontFaceOnload("Powerline Symbols", {
+      success: initPlayer,
+      error: function() {
+        console.log('Failed to pre-load Powerline Symbols font');
+        window.callPhantom({ rect: undefined });
+      },
+      timeout: 1000
+    });
   }, jsonUrl, poster);
 });
 
