@@ -2,7 +2,7 @@
 
 set -e
 
-player_version=v2.4.0
+player_version=v2.4.1
 a2png_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ ! -f "${a2png_dir}/asciinema-player.js" ]; then

@@ -13,7 +13,6 @@ var scale = parseInt(system.env['SCALE'], 10);
 var width = system.env['WIDTH'] || null;
 var height = system.env['HEIGHT'] || null;
 
-var localServerPort = 4444;
 var pageUrl = a2pngDir + '/a2png.html';
 
 var page = require('webpage').create();
@@ -21,43 +20,8 @@ page.settings.localToRemoteUrlAccessEnabled = true;
 page.viewportSize = { width: 9999, height: 9999 };
 page.zoomFactor = scale;
 
-var server;
-
 function exit(code) {
-  if (server) {
-    console.log('Shutting down local server...');
-    server.close();
-  }
-
   phantom.exit(code === undefined ? 0 : code);
-}
-
-if (!(/^https?:\/\//.test(jsonUrl))) {
-  console.log('Input is local file, starting server on port ' + localServerPort + '...');
-
-  var path = jsonUrl;
-  jsonUrl = "http://localhost:" + localServerPort + "/";
-
-  server = require('webserver').create();
-  var ok = server.listen(localServerPort, function(request, response) {
-    try {
-      response.statusCode = 200;
-      response.setHeader('Content-Type', 'application/json; charset=utf-8');
-      response.write(fs.read(path));
-      response.close();
-    } catch (e) {
-      console.log("Error serving asciicast file:", e);
-      response.statusCode = 500;
-      response.write('');
-      response.close();
-    }
-  });
-
-  if (!ok) {
-    console.log("Couldn't start server. Port taken?");
-    server = null;
-    exit(1);
-  }
 }
 
 page.onConsoleMessage = function(msg) {
@@ -96,6 +60,21 @@ page.onCallback = function(data) {
   exit(0);
 };
 
+var input;
+
+if (!(/^https?:\/\//.test(jsonUrl))) {
+  console.log('Reading asciicast file...');
+  input = {
+    type: 'json',
+    data: fs.read(jsonUrl)
+  };
+} else {
+  input = {
+    type: 'url',
+    data: jsonUrl
+  };
+}
+
 console.log('Loading player page...');
 
 page.open(pageUrl, function(status) {
@@ -104,7 +83,7 @@ page.open(pageUrl, function(status) {
     exit(1);
   }
 
-  var rect = page.evaluate(function(jsonUrl, poster, theme, width, height) {
+  var rect = page.evaluate(function(input, poster, theme, width, height) {
     function initPlayer() {
       var opts = {
         poster: poster,
@@ -112,7 +91,7 @@ page.open(pageUrl, function(status) {
         width: width,
         height: height,
         onCanPlay: function() {
-          setTimeout(function() { // let terminal resize and poster render
+          setTimeout(function() { // let Powerline font render
             var elements = document.querySelectorAll('.asciinema-player');
 
             if (elements.length > 0) {
@@ -124,7 +103,15 @@ page.open(pageUrl, function(status) {
         }
       };
 
-      asciinema.player.js.CreatePlayer('player', jsonUrl, opts);
+      var data;
+
+      if (input.type == 'json') {
+        data = JSON.parse(input.data);
+      } else {
+        data = input.data;
+      }
+
+      asciinema.player.js.CreatePlayer('player', data, opts);
     }
 
     FontFaceOnload("Powerline Symbols", {
@@ -135,7 +122,7 @@ page.open(pageUrl, function(status) {
       },
       timeout: 1000
     });
-  }, jsonUrl, poster, theme, width, height);
+  }, input, poster, theme, width, height);
 });
 
 // vim: ft=javascript
