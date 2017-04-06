@@ -1,0 +1,23 @@
+{
+  "name": "a2png",
+  "version": "0.1.0",
+  "description": "asciinema PNG generator",
+  "main": "main.js",
+  "dependencies": {
+    "phantomjs-prebuilt": "^2.1.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asciinema/a2png.git"
+  },
+  "author": "Marcin Kulik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asciinema/a2png/issues"
+  },
+  "homepage": "https://github.com/asciinema/a2png#readme"
+}

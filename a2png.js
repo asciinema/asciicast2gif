@@ -1,22 +1,16 @@
 #!/usr/bin/env phantomjs
 
 var system = require('system');
-var fs = require('fs');
 
-var a2pngDir = system.args[1];
-var jsonUrl = system.args[2];
+var pageUrl = system.args[1];
+var poster = system.args[2];
 var imagePath = system.args[3];
-var poster = system.args[4];
-
-var theme = system.env['THEME'];
-var scale = parseInt(system.env['SCALE'], 10);
-var width = system.env['WIDTH'] || null;
-var height = system.env['HEIGHT'] || null;
-
-var pageUrl = a2pngDir + '/a2png.html';
+var width = parseInt(system.args[4], 10);
+var height = parseInt(system.args[5], 10);
+var theme = system.args[6];
+var scale = parseInt(system.args[7], 10);
 
 var page = require('webpage').create();
-page.settings.localToRemoteUrlAccessEnabled = true;
 page.viewportSize = { width: 9999, height: 9999 };
 page.zoomFactor = scale;
 
@@ -60,22 +54,7 @@ page.onCallback = function(data) {
   exit(0);
 };
 
-var input;
-
-if (!(/^https?:\/\//.test(jsonUrl))) {
-  console.log('Reading asciicast file...');
-  input = {
-    type: 'json',
-    data: fs.read(jsonUrl)
-  };
-} else {
-  input = {
-    type: 'url',
-    data: jsonUrl
-  };
-}
-
-console.log('Loading player page...');
+console.log('Loading page...');
 
 page.open(pageUrl, function(status) {
   if (status !== "success") {
@@ -83,46 +62,37 @@ page.open(pageUrl, function(status) {
     exit(1);
   }
 
-  var rect = page.evaluate(function(input, poster, theme, width, height) {
-    function initPlayer() {
+  var rect = page.evaluate(function(poster, theme, width, height) {
+    function initTerminal() {
       var opts = {
-        poster: poster,
+        poster: JSON.parse(poster),
         theme: theme,
         width: width,
-        height: height,
-        onCanPlay: function() {
-          setTimeout(function() { // let Powerline font render
-            var elements = document.querySelectorAll('.asciinema-player');
-
-            if (elements.length > 0) {
-              window.callPhantom({ rect: elements[0].getBoundingClientRect() });
-            } else {
-              window.callPhantom({ rect: undefined });
-            }
-          }, 10);
-        }
+        height: height
       };
 
-      var data;
+      asciinema.png.page.RenderTerminal('player', opts);
 
-      if (input.type == 'json') {
-        data = JSON.parse(input.data);
-      } else {
-        data = input.data;
-      }
+      setTimeout(function() { // let Powerline font render
+        var elements = document.querySelectorAll('.asciinema-player');
 
-      asciinema.player.js.CreatePlayer('player', data, opts);
+        if (elements.length > 0) {
+          window.callPhantom({ rect: elements[0].getBoundingClientRect() });
+        } else {
+          window.callPhantom({ rect: undefined });
+        }
+      }, 10);
     }
 
     FontFaceOnload("Powerline Symbols", {
-      success: initPlayer,
+      success: initTerminal,
       error: function() {
         console.log('Failed to pre-load Powerline Symbols font');
         window.callPhantom({ rect: undefined });
       },
       timeout: 1000
     });
-  }, input, poster, theme, width, height);
+  }, poster, theme, width, height);
 });
 
 // vim: ft=javascript
