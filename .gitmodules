@@ -1,0 +1,3 @@
+[submodule "asciinema-player"]
+	path = asciinema-player
+	url = https://github.com/asciinema/asciinema-player.git
