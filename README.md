@@ -8,11 +8,11 @@ Clone the repository:
 
     git clone https://github.com/asciinema/a2png.git
 
-Install leiningen:
+Install leiningen & compile scripts:
 
     TODO: describe
 
-Install dependencies:
+Install dependencies (PhantomJS):
 
     npm install
 
