@@ -4,7 +4,7 @@ set -e
 
 a2png_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-node "${a2png_dir}/main.js" "$@"
+node --max-old-space-size=512 "${a2png_dir}/main.js" "$@"
 
 out=$2
 
