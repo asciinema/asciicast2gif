@@ -20,6 +20,9 @@
                                          :foreign-libs [{:file "public/codepoint-polyfill.js"
                                                          :provides ["asciinema.player.codepoint-polyfill"]}]
                                          :optimizations :simple
+                                         :optimize-constants true
+                                         :static-fns true
+                                         :pretty-print false
                                          :elide-asserts true
                                          :target :nodejs
                                          :main "asciinema.png.main"}}
@@ -28,5 +31,8 @@
                                          :foreign-libs [{:file "public/codepoint-polyfill.js"
                                                          :provides ["asciinema.player.codepoint-polyfill"]}]
                                          :optimizations :simple
+                                         :optimize-constants true
+                                         :static-fns true
+                                         :pretty-print false
                                          :elide-asserts true
                                          :main "asciinema.png.page"}}}})
