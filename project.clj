@@ -4,7 +4,7 @@
   :license {:name "MIT"}
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.494"]
+                 [org.clojure/clojurescript "1.9.473"]
                  [org.clojure/core.async "0.3.442"]
                  [prismatic/schema "1.1.5"]
                  [org.clojure/core.match "0.3.0-alpha4"]
