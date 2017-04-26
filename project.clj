@@ -1,5 +1,5 @@
-(defproject a2png "0.1.0-SNAPSHOT"
-  :description "asciinema PNG generator"
+(defproject a2gif "0.1.0-SNAPSHOT"
+  :description "asciinema GIF generator"
   :url "http://example.com/FIXME"
   :license {:name "MIT"}
 
@@ -25,7 +25,7 @@
                                          :pretty-print false
                                          :elide-asserts true
                                          :target :nodejs
-                                         :main "asciinema.png.main"}}
+                                         :main "asciinema.gif.main"}}
                        :page {:source-paths ["src"]
                               :compiler {:output-to "page/page.js"
                                          :foreign-libs [{:file "public/codepoint-polyfill.js"
@@ -35,4 +35,4 @@
                                          :static-fns true
                                          :pretty-print false
                                          :elide-asserts true
-                                         :main "asciinema.png.page"}}}})
+                                         :main "asciinema.gif.page"}}}})

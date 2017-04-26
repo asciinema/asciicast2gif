@@ -1,4 +1,4 @@
-(ns asciinema.png.main
+(ns asciinema.gif.main
   (:require [cljs.nodejs :as nodejs]
             [asciinema.player.source :as source]
             [asciinema.player.frames :as frames]
@@ -13,8 +13,8 @@
 (def phantomjs (nodejs/require "phantomjs-prebuilt"))
 (def path (nodejs/require "path"))
 
-(def html-path (.resolve path (js* "__dirname") "page" "a2png.html"))
-(def js-path (.resolve path (js* "__dirname") "a2png.js"))
+(def html-path (.resolve path (js* "__dirname") "page" "a2gif.html"))
+(def js-path (.resolve path (js* "__dirname") "a2gif.js"))
 
 (defn- parse-json [json]
   (-> json

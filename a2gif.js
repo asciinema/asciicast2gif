@@ -71,7 +71,7 @@ page.open(pageUrl, function(status) {
         height: height
       };
 
-      asciinema.png.page.RenderTerminal('player', opts);
+      asciinema.gif.page.RenderTerminal('player', opts);
 
       setTimeout(function() { // let Powerline font render
         var elements = document.querySelectorAll('.asciinema-player');

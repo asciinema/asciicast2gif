@@ -1,4 +1,4 @@
-(ns asciinema.png.page
+(ns asciinema.gif.page
   (:require [asciinema.player.view :as view]
             [reagent.core :as reagent]))
 
