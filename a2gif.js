@@ -3,12 +3,10 @@
 var system = require('system');
 
 var pageUrl = system.args[1];
-var poster = system.args[2];
-var imagePath = system.args[3];
-var width = parseInt(system.args[4], 10);
-var height = parseInt(system.args[5], 10);
-var theme = system.args[6];
-var scale = parseInt(system.args[7], 10);
+var width = parseInt(system.args[2], 10);
+var height = parseInt(system.args[3], 10);
+var theme = system.args[4];
+var scale = parseInt(system.args[5], 10);
 
 var page = require('webpage').create();
 page.viewportSize = { width: 9999, height: 9999 };
@@ -42,6 +40,7 @@ page.onCallback = function(data) {
     return;
   }
 
+  console.log('setting clipRect...');
   page.clipRect = {
     left: rect.left * scale,
     top: rect.top * scale,
@@ -49,8 +48,31 @@ page.onCallback = function(data) {
     height: rect.height * scale
   };
 
-  console.log('Saving screenshot...');
-  page.render(imagePath);
+  console.log('reading update from stdin...');
+  var line = system.stdin.readLine();
+
+  while (line !== '') {
+    var screen = JSON.parse(line);
+    var imagePath = system.stdin.readLine();
+    if (imagePath == '') {
+      console.log('error: imagePath empty');
+      exit(1);
+    }
+
+    console.log('calling updateTerminal...');
+    page.evaluate(function(screen) {
+      window.updateTerminal(screen);
+    }, screen);
+
+    console.log('saving screenshot to ' + imagePath + '...');
+    page.render(imagePath);
+
+    console.log('reading update from stdin...');
+    line = system.stdin.readLine();
+  }
+
+  console.log('all done!');
+
   exit(0);
 };
 
@@ -62,16 +84,15 @@ page.open(pageUrl, function(status) {
     exit(1);
   }
 
-  var rect = page.evaluate(function(poster, theme, width, height) {
+  page.evaluate(function(width, height, theme) {
     function initTerminal() {
       var opts = {
-        poster: JSON.parse(poster),
-        theme: theme,
         width: width,
-        height: height
+        height: height,
+        theme: theme
       };
 
-      asciinema.gif.page.RenderTerminal('player', opts);
+      window.updateTerminal = asciinema.gif.page.InitTerminal('player', opts);
 
       setTimeout(function() { // let Powerline font render
         var elements = document.querySelectorAll('.asciinema-player');
@@ -92,7 +113,7 @@ page.open(pageUrl, function(status) {
       },
       timeout: 1000
     });
-  }, poster, theme, width, height);
+  }, width, height, theme);
 });
 
 // vim: ft=javascript
