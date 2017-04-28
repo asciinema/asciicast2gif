@@ -9,6 +9,8 @@ trap 'rm -rf $tmp_dir' EXIT
 
 theme="asciinema"
 scale=2
+width=""
+height=""
 
 while getopts ":w:h:t:s:" opt; do
     case $opt in
@@ -17,6 +19,12 @@ while getopts ":w:h:t:s:" opt; do
             ;;
         s)
             scale=$OPTARG
+            ;;
+        w)
+            width=$OPTARG
+            ;;
+        h)
+            height=$OPTARG
             ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
@@ -32,11 +40,19 @@ done
 shift $((OPTIND-1))
 
 if (($# != 2)); then
-    echo "usage: a2gif [-t theme] [-s scale] <input-json-path-or-url> <output-gif-path>"
+    echo "usage: a2gif [-t theme] [-s scale] [-w columns] [-h rows] <input-json-path-or-url> <output-gif-path>"
     exit 1
 fi
 
-env WIDTH=$width HEIGHT=$height node \
+if [[ -n $width ]]; then
+    export WIDTH=$width
+fi
+
+if [[ -n $height ]]; then
+    export HEIGHT=$height
+fi
+
+node \
     --max-old-space-size=512 \
     "${a2gif_dir}/main.js" \
     "${1}" \

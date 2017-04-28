@@ -13,6 +13,7 @@
 (def phantomjs (nodejs/require "phantomjs-prebuilt"))
 (def path (nodejs/require "path"))
 (def child-process (nodejs/require "child_process"))
+(def env (.-env nodejs/process))
 
 (def renderer-html-path (.resolve path (js* "__dirname") "page" "a2gif.html"))
 (def renderer-js-path (.resolve path (js* "__dirname") "a2gif.js"))
@@ -127,10 +128,14 @@
   (when-not (= (count args) 5)
     (println "bad number of args:" (count args))
     (exit 1))
-  (let [[url out-path tmp-dir theme scale] args]
+  (let [[url out-path tmp-dir theme scale] args
+        forced-width (.-WIDTH env)
+        forced-height (.-HEIGHT env)]
     (println (str "loading " url "..."))
     (go
       (let [{:keys [width height frames]} (<! (load-asciicast url))
+            width (or forced-width width)
+            height (or forced-height height)
             renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
             delays-and-paths (gen-image-frames renderer tmp-dir frames)]
         (close-stdin renderer)
