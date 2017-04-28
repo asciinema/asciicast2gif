@@ -124,13 +124,12 @@
     (shell cmd)))
 
 (defn -main [& args]
-  (go
-    (let [url (first args)
-          out-path (nth args 1)
-          tmp-dir (nth args 2)
-          theme (nth args 3 "asciinema")
-          scale (nth args 4 1)]
-      (println (str "loading " url "..."))
+  (when-not (= (count args) 5)
+    (println "bad number of args:" (count args))
+    (exit 1))
+  (let [[url out-path tmp-dir theme scale] args]
+    (println (str "loading " url "..."))
+    (go
       (let [{:keys [width height frames]} (<! (load-asciicast url))
             renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
             delays-and-paths (gen-image-frames renderer tmp-dir frames)]
