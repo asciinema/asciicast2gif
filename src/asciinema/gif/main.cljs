@@ -1,11 +1,13 @@
 (ns asciinema.gif.main
   (:require [cljs.nodejs :as nodejs]
+            [asciinema.gif.helpers :refer [safe-map]]
             [asciinema.player.source :as source]
             [asciinema.player.frames :as frames]
             [asciinema.player.screen :as screen]
             [cljs.core.async :refer [<! put! chan]]
             [clojure.string :as str])
-  (:require-macros [cljs.core.async.macros :refer [go]]))
+  (:require-macros [asciinema.gif.macros :refer [<?]]
+                   [cljs.core.async.macros :refer [go]]))
 
 (nodejs/enable-util-print!)
 
@@ -48,7 +50,7 @@
     (put! ch data)))
 
 (defn- load-asciicast [url]
-  (let [ch (chan 1 (map (comp source/initialize-asciicast parse-json)))]
+  (let [ch (chan 1 (safe-map (comp source/initialize-asciicast parse-json)))]
     (if (str/starts-with? url "http")
       (http-get url ch)
       (read-file url ch))
@@ -133,7 +135,7 @@
         forced-height (.-HEIGHT env)]
     (println (str "loading " url "..."))
     (go
-      (let [{:keys [width height frames]} (<! (load-asciicast url))
+      (let [{:keys [width height frames]} (<? (load-asciicast url))
             width (or forced-width width)
             height (or forced-height height)
             renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
