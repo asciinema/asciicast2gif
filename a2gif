@@ -4,9 +4,6 @@ set -e
 
 a2gif_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'a2gif-tmp')
-trap 'rm -rf $tmp_dir' EXIT
-
 theme="asciinema"
 speed=1
 scale=2
@@ -55,6 +52,9 @@ fi
 if [[ -n $height ]]; then
     export HEIGHT=$height
 fi
+
+tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'a2gif-tmp')
+trap 'rm -rf $tmp_dir' EXIT
 
 node \
     --max-old-space-size=512 \
