@@ -2,6 +2,21 @@
 
 set -e
 
+if ! type "node" >/dev/null 2>&1; then
+    echo "error: Node.js not installed? Executable 'node' not found"
+    exit 1
+fi
+
+if ! type "convert" >/dev/null 2>&1; then
+    echo "error: ImageMagick not installed? Executable 'convert' not found"
+    exit 1
+fi
+
+if ! type "gifsicle" >/dev/null 2>&1; then
+    echo "error: gifsicle not installed? Executable 'gifsicle' not found"
+    exit 1
+fi
+
 a2gif_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 theme="asciinema"
