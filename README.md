@@ -22,6 +22,10 @@ animation, also piping it to `gifsicle` to get the final, optimized GIF file.
 Clone the repository:
 
     git clone --recursive https://github.com/asciinema/a2gif.git
+    cd a2gif
+
+All further commands are assumed to be called from within the checked out
+directory.
 
 ### Install build time dependencies
 
