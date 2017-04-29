@@ -4,11 +4,30 @@ a2gif is a tool for generating GIF animations from
 [asciicast](https://github.com/asciinema/asciinema/blob/master/doc/asciicast-v1.md) files
 recorded by [asciinema](https://github.com/asciinema/asciinema).
 
+## How it works
+
+Here's how the asciicast->GIF conversion is implemented.
+
+`a2gif` shell script parses command line arguments and executes Node.js script
+(`main.js`). `main.js` loads asciicast (either from remote URL or local
+filesystem), generates text representation of the screen for each frame
+using [asciinema-player](https://github.com/asciinema/asciinema-player)'s
+virtual terminal emulator, and sends it to PhantomJS-based renderer script
+(`renderer.js`), which saves PNG screenshots to a temporary directory. Finally,
+`main.js` calls ImageMagick's `convert` on these PNG images to construct GIF
+animation, also piping it to `gifsicle` to get the final, optimized GIF file.
+
 ## Installation
+
+a2gif is 
+
+### Build time dependencies
+
+To 
 
 Clone the repository:
 
-    git clone https://github.com/asciinema/a2gif.git
+    git clone --recursive https://github.com/asciinema/a2gif.git
 
 Install leiningen & compile scripts:
 
