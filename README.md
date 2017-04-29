@@ -35,9 +35,21 @@ and [Leiningen](https://leiningen.org/#install).
 
 ### Install runtime dependencies
 
-Install dependencies (PhantomJS):
+Following runtime dependencies need to be installed:
+
+- [Node.js](https://nodejs.org/en/)
+- [PhantomJS](http://phantomjs.org/) (optional, see below)
+- [ImageMagick](http://www.imagemagick.org/)
+- [gifsicle](https://www.lcdf.org/gifsicle/)
+
+Install Node.js wrapper for PhantomJS:
 
     npm install
+
+If you don't have PhantomJS available in `$PATH` at this point it will be
+automatically downloaded during
+[phantomjs-prebuilt](https://www.npmjs.com/package/phantomjs-prebuilt)
+package installation.
 
 ### Build
 
