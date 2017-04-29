@@ -17,6 +17,13 @@ virtual terminal emulator, and sends it to PhantomJS-based renderer script
 `main.js` calls ImageMagick's `convert` on these PNG images to construct GIF
 animation, also piping it to `gifsicle` to get the final, optimized GIF file.
 
+Note, `a2gif` doesn't capture screenshots at a fixed frame-rate (e.g. 30 FPS)
+like alternative tools. Instead, it generates PNG files for each screen update,
+and specifies delay for every image individually (`convert -delay <delay-a>
+0.png -delay <delay-b> 1.png -delay <delay-c> 2.png ...`). When the screen is
+idle there're no screenshots generated. This saves disk space and makes it less
+work for both `convert` and `gifsicle`, while resulting in smaller GIF file.
+
 ## Installation
 
 Clone the repository:
