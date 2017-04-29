@@ -68,13 +68,13 @@ To build the scripts run:
 Example of generating GIF from asciicast URL, with default options (normal
 speed, double pixel density, asciinema theme):
 
-    a2gif https://asciinema.org/a/42383.json output.gif
+    a2gif https://asciinema.org/a/113463.json demo.gif
 
 Example of generating GIF from local asciicast file, with Solarized Dark theme,
 double speed (`-s 2`), single pixel density (`-S 1`), forcing terminal size to
 80 columns by 24 rows:
 
-    a2gif -t solarized-dark -s 2 -S 1 -w 80 -h 24 demo.json output.gif
+    a2gif -t solarized-dark -s 2 -S 1 -w 80 -h 24 demo.json demo.gif
 
 ## License
 
