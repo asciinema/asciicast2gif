@@ -18,12 +18,12 @@ Install dependencies (PhantomJS):
 
 ## Usage
 
-    a2gif.sh [-t theme] [-s scale] [-w cols] [-h rows] <input-json-path-or-url> <output-gif-path>
+    a2gif [-t theme] [-s scale] [-w cols] [-h rows] <input-json-path-or-url> <output-gif-path>
 
 For example:
 
-    a2gif.sh https://asciinema.org/a/42383.json output.gif
-    a2gif.sh -t solarized-dark -s 1 -w 80 -h 24 demo.json output.gif
+    a2gif https://asciinema.org/a/42383.json output.gif
+    a2gif -t solarized-dark -s 1 -w 80 -h 24 demo.json output.gif
 
 ## License
 
