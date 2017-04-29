@@ -64,7 +64,9 @@
 
 (defn- wait-for-exit [program]
   (let [ch (chan)]
-    (.on program "exit" #(put! ch (zero? %)))
+    (.on program "exit" #(put! ch (if (zero? %)
+                                    true
+                                    (js/Error. (str "program exited with code " %)))))
     ch))
 
 (defn- exit [code]
@@ -141,8 +143,7 @@
             renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
             delays-and-paths (gen-image-frames renderer tmp-dir frames)]
         (close-stdin renderer)
-        (if (<! (wait-for-exit renderer))
-          (gen-gif delays-and-paths out-path)
-          (exit 1))))))
+        (<? (wait-for-exit renderer))
+        (gen-gif delays-and-paths out-path)))))
 
 (set! *main-cli-fn* -main)
