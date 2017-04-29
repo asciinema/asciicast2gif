@@ -19,23 +19,31 @@ animation, also piping it to `gifsicle` to get the final, optimized GIF file.
 
 ## Installation
 
-a2gif is 
-
-### Build time dependencies
-
-To 
-
 Clone the repository:
 
     git clone --recursive https://github.com/asciinema/a2gif.git
 
-Install leiningen & compile scripts:
+### Install build time dependencies
 
-    TODO: describe
+Both Node.js script (`main.js`) and page script used by renderer's HTML page
+(`page/page.js`) need to be build from
+[ClojureScript source code](https://github.com/asciinema/a2gif/tree/master/src/asciinema/gif).
+
+You need
+[Java 8 JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+and [Leiningen](https://leiningen.org/#install).
+
+### Install runtime dependencies
 
 Install dependencies (PhantomJS):
 
     npm install
+
+### Build
+
+To build the scripts run:
+
+    lein cljsbuild once main && lein cljsbuild once page 
 
 ## Usage
 
