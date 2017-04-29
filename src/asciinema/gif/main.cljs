@@ -129,10 +129,11 @@
     (shell cmd)))
 
 (defn -main [& args]
-  (when-not (= (count args) 5)
+  (when-not (= (count args) 6)
     (println "bad number of args:" (count args))
     (exit 1))
-  (let [[url out-path tmp-dir theme scale] args
+  (let [[url out-path tmp-dir theme speed scale] args
+        speed (js/parseFloat speed)
         forced-width (.-WIDTH env)
         forced-height (.-HEIGHT env)]
     (println (str "loading " url "..."))
@@ -141,7 +142,8 @@
             width (or forced-width width)
             height (or forced-height height)
             renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
-            delays-and-paths (gen-image-frames renderer tmp-dir frames)]
+            xf (frames/accelerate-xf speed)
+            delays-and-paths (gen-image-frames renderer tmp-dir (sequence xf frames))]
         (close-stdin renderer)
         (<? (wait-for-exit renderer))
         (gen-gif delays-and-paths out-path)))))
