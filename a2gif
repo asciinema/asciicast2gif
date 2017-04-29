@@ -2,6 +2,8 @@
 
 set -e
 
+a2gif_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if ! type "node" >/dev/null 2>&1; then
     echo "error: Node.js not installed? Executable 'node' not found"
     exit 1
@@ -17,7 +19,15 @@ if ! type "gifsicle" >/dev/null 2>&1; then
     exit 1
 fi
 
-a2gif_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ ! -f "${a2gif_dir}/main.js" ]]; then
+    echo "error: ${a2gif_dir}/main.js not found. Build it with: lein cljsbuild once main"
+    exit 1
+fi
+
+if [[ ! -f "${a2gif_dir}/page/page.js" ]]; then
+    echo "error: ${a2gif_dir}/page/page.js not found. Build it with: lein cljsbuild once page"
+    exit 1
+fi
 
 theme="asciinema"
 speed=1
