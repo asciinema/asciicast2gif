@@ -86,6 +86,11 @@ double speed (`-s 2`), single pixel density (`-S 1`):
 
 ![example gif 2](https://www.dropbox.com/s/05dclrsq9eqqsvi/demo-2.gif?dl=1)
 
+### Debugging
+
+You can set `DEBUG=1` environment variable to make the output of the conversion
+process more verbose.
+
 ### Tweaking conversion process
 
 You can pass extra arguments to Node.js script invocation via `NODE_OPTS`

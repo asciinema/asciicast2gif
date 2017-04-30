@@ -2,6 +2,8 @@
 
 set -e
 
+export DEBUG=${DEBUG:-0}
+
 a2gif_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if ! type "node" >/dev/null 2>&1; then
@@ -91,4 +93,4 @@ node \
     $speed \
     $scale
 
-echo "Done."
+echo -e "\x1b[32m==> \x1b[0mDone."

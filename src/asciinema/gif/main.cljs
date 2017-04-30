@@ -1,6 +1,7 @@
 (ns asciinema.gif.main
   (:require [cljs.nodejs :as nodejs]
             [asciinema.gif.helpers :refer [safe-map]]
+            [asciinema.gif.log :as log]
             [asciinema.player.source :as source]
             [asciinema.player.frames :as frames]
             [asciinema.player.screen :as screen]
@@ -50,6 +51,7 @@
     (put! ch data)))
 
 (defn- load-asciicast [url]
+  (log/info (str "Loading " url "..."))
   (let [ch (chan 1 (safe-map (comp source/initialize-asciicast parse-json)))]
     (if (str/starts-with? url "http")
       (http-get url ch)
@@ -57,6 +59,7 @@
     ch))
 
 (defn- spawn-phantomjs [script-path & args]
+  (log/info "Spawning PhantomJS renderer...")
   (let [program (apply (.-exec phantomjs) script-path args)]
     (.pipe (.-stdout program) (.-stdout nodejs/process))
     (.pipe (.-stderr program) (.-stderr nodejs/process))
@@ -87,7 +90,7 @@
 
 (defn- gen-png [renderer pngs-dir idx screen]
   (let [path (str pngs-dir "/" idx ".png")]
-    (println "sending frame" idx "...")
+    (log/debug "Sending frame" idx "to renderer...")
     (write-to-stdin renderer (str (screen-json screen) "\n"))
     (write-to-stdin renderer (str path "\n"))
     path))
@@ -96,6 +99,7 @@
   [delay (gen-png renderer pngs-dir idx screen)])
 
 (defn- gen-image-frames [renderer pngs-dir frames]
+  (log/info "Generating frame screenshots...")
   (->> frames
        frames/to-relative-time
        (map-indexed (partial gen-frame renderer pngs-dir)) ; generate PNG images
@@ -124,28 +128,28 @@
        " -"))
 
 (defn- gen-gif [delays-and-paths out-path]
+  (log/info "Combining screenshots into GIF file...")
   (let [cmd (-> delays-and-paths all-frame-args (full-cmd out-path))]
-    (println cmd)
+    (log/debug "Executing:" cmd)
     (shell cmd)))
 
 (defn -main [& args]
   (when-not (= (count args) 6)
-    (println "bad number of args:" (count args))
+    (log/error "Error: bad number of args:" (count args))
     (exit 1))
-  (let [[url out-path tmp-dir theme speed scale] args
-        speed (js/parseFloat speed)
-        forced-width (.-WIDTH env)
-        forced-height (.-HEIGHT env)]
-    (println (str "loading " url "..."))
-    (go
-      (let [{:keys [width height frames]} (<? (load-asciicast url))
-            width (or forced-width width)
-            height (or forced-height height)
-            renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
-            xf (frames/accelerate-xf speed)
-            delays-and-paths (gen-image-frames renderer tmp-dir (sequence xf frames))]
-        (close-stdin renderer)
-        (<? (wait-for-exit renderer))
-        (gen-gif delays-and-paths out-path)))))
+  (go
+    (let [[url out-path tmp-dir theme speed scale] args
+          speed (js/parseFloat speed)
+          forced-width (.-WIDTH env)
+          forced-height (.-HEIGHT env)
+          {:keys [width height frames]} (<? (load-asciicast url))
+          width (or forced-width width)
+          height (or forced-height height)
+          renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
+          xf (frames/accelerate-xf speed)
+          delays-and-paths (gen-image-frames renderer tmp-dir (sequence xf frames))]
+      (close-stdin renderer)
+      (<? (wait-for-exit renderer))
+      (gen-gif delays-and-paths out-path))))
 
 (set! *main-cli-fn* -main)

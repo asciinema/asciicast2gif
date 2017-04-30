@@ -12,22 +12,32 @@ var page = require('webpage').create();
 page.viewportSize = { width: 9999, height: 9999 };
 page.zoomFactor = scale;
 
+function logDebug(message) {
+  if (system.env['DEBUG'] === '1') {
+    console.log(message);
+  }
+}
+
+function logError(message) {
+  console.log("\u001b[31m==> \u001b[0m" + message);
+}
+
 function exit(code) {
   phantom.exit(code === undefined ? 0 : code);
 }
 
 page.onConsoleMessage = function(msg) {
-  console.log('console.log: ' + msg);
+  logDebug('console.log: ' + msg);
 };
 
 page.onError = function(msg, trace) {
-  console.log('Script error: ' + msg);
+  logError('Script error: ' + msg);
   exit(1);
 };
 
 page.onResourceError = function(resourceError) {
-  console.log('Unable to load resource (#' + resourceError.id + ', URL:' + resourceError.url + ')');
-  console.log('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
+  logError('Unable to load resource (#' + resourceError.id + ', URL:' + resourceError.url + ')');
+  logError('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
   exit(1);
 };
 
@@ -35,12 +45,12 @@ page.onCallback = function(data) {
   var rect = data.rect;
 
   if (!rect) {
-    console.log("Couldn't get geometry of requested DOM element");
+    logError("Couldn't get geometry of requested DOM element");
     exit(1);
     return;
   }
 
-  console.log('setting clipRect...');
+  logDebug('Setting clipRect...');
   page.clipRect = {
     left: rect.left * scale,
     top: rect.top * scale,
@@ -48,39 +58,39 @@ page.onCallback = function(data) {
     height: rect.height * scale
   };
 
-  console.log('reading update from stdin...');
+  logDebug('Reading update from stdin...');
   var line = system.stdin.readLine();
 
   while (line !== '') {
     var screen = JSON.parse(line);
     var imagePath = system.stdin.readLine();
     if (imagePath == '') {
-      console.log('error: imagePath empty');
+      logError('Error: imagePath empty');
       exit(1);
     }
 
-    console.log('calling updateTerminal...');
+    logDebug('Calling updateTerminal...');
     page.evaluate(function(screen) {
       window.updateTerminal(screen);
     }, screen);
 
-    console.log('saving screenshot to ' + imagePath + '...');
+    logDebug('Saving screenshot to ' + imagePath + '...');
     page.render(imagePath);
 
-    console.log('reading update from stdin...');
+    logDebug('Reading update from stdin...');
     line = system.stdin.readLine();
   }
 
-  console.log('all done!');
+  logDebug('Rendering success');
 
   exit(0);
 };
 
-console.log('Loading page...');
+logDebug('Loading page...');
 
 page.open(pageUrl, function(status) {
   if (status !== "success") {
-    console.log("Failed to load " + url);
+    logError("Failed to load " + url);
     exit(1);
   }
 
