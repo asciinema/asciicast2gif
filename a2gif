@@ -82,7 +82,7 @@ tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'a2gif-tmp')
 trap 'rm -rf $tmp_dir' EXIT
 
 node \
-    --max-old-space-size=512 \
+    $NODE_OPTS \
     "${a2gif_dir}/main.js" \
     "${1}" \
     "${2}" \
