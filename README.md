@@ -86,6 +86,17 @@ double speed (`-s 2`), single pixel density (`-S 1`):
 
 ![example gif 2](https://www.dropbox.com/s/05dclrsq9eqqsvi/demo-2.gif?dl=1)
 
+### Tweaking conversion process
+
+You can pass extra arguments to Node.js script invocation via `NODE_OPTS`
+environment variable.
+
+#### Limiting node process memory usage
+
+Limit Node's heap size to 512 MB:
+
+    NODE_OPTS="--max-old-space-size=512" a2gif ...
+
 ## License
 
 Copyright &copy; 2017 Marcin Kulik.
