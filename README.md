@@ -26,6 +26,10 @@ work for both `convert` and `gifsicle`, while resulting in smaller GIF file.
 
 ## Installation
 
+Due to the multitude of build time and runtime dependencies the easiest (and
+recommended) way to use a2gif is through [a2gif Docker image](#docker-image). If
+you'd rather build it yourself then follow the instructions below.
+
 Clone the repository:
 
     git clone --recursive https://github.com/asciinema/a2gif.git
@@ -101,6 +105,36 @@ environment variable.
 Limit Node's heap size to 512 MB:
 
     NODE_OPTS="--max-old-space-size=512" a2gif ...
+
+## Docker image
+
+You can use a2gif through
+[official a2gif Docker image](https://hub.docker.com/r/asciinema/a2gif/).
+
+Pull the image:
+
+    docker pull asciinema/a2gif
+
+Use it like this:
+
+    docker run --rm -v $PWD:/data asciinema/a2gif [options and arguments...]
+
+You need to mount some local directory at `/data` so input and output files can
+be accessed by the container. Mounting current working directory (`$PWD`) makes
+most sense in majority of cases.
+
+For example, generating GIF from local file, with double speed and Solarized
+theme:
+
+    docker run --rm -v $PWD:/data asciinema/a2gif -s 2 -t solarized-dark demo.json demo.gif
+
+Running the above, long command can get old very quickly. Creating a shell alias
+may be a good idea:
+
+    alias a2gif='docker run --rm -v $PWD:/data asciinema/a2gif'
+
+Look at [general usage instructions](#usage) above for all command line
+arguments, options etc.
 
 ## License
 

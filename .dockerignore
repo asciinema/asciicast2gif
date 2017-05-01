@@ -1,0 +1,11 @@
+.git
+.gitignore
+Dockerfile
+*.png
+*.gif
+*.json
+!package.json
+main.js
+page/page.js
+node_modules
+target
