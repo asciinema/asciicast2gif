@@ -68,7 +68,16 @@ done
 shift $((OPTIND-1))
 
 if (($# != 2)); then
+    echo "a2gif - Generate GIF animations from asciicasts (asciinema recordings)"
+    echo
     echo "usage: a2gif [-t theme] [-s speed] [-S scale] [-w columns] [-h rows] <input-json-path-or-url> <output-gif-path>"
+    echo
+    echo "options:"
+    echo "  -t <theme>        color theme, one of: asciinema, tango, solarized-dark, solarized-light, monokai (default: asciinema)"
+    echo "  -s <speed>        animation speed (default: 1)"
+    echo "  -S <scale>        image scale / pixel density (default: 2)"
+    echo "  -w <columns>      clip terminal to specified number of columns (width)"
+    echo "  -h <rows>         clip terminal to specified number of rows (height)"
     exit 1
 fi
 

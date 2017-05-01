@@ -76,6 +76,14 @@ To build the scripts run:
 
     a2gif [-t theme] [-s speed] [-S scale] [-w cols] [-h rows] <input-json-path-or-url> <output-gif-path>
 
+Following options are supported:
+
+    -t <theme>        color theme, one of: asciinema, tango, solarized-dark, solarized-light, monokai (default: asciinema)
+    -s <speed>        animation speed (default: 1)
+    -S <scale>        image scale / pixel density (default: 2)
+    -w <columns>      clip terminal to specified number of columns (width)
+    -h <rows>         clip terminal to specified number of rows (height)
+
 Example of generating GIF from asciicast URL, with default options (normal
 speed, double pixel density, asciinema theme):
 
