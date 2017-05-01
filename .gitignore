@@ -1,3 +1,6 @@
 /target
 /page/page.js
 /main.js
+/node_modules
+/*.gif
+/*.png
