@@ -108,8 +108,9 @@ Limit Node's heap size to 512 MB:
 
 ## Docker image
 
-You can use a2gif through
-[official a2gif Docker image](https://hub.docker.com/r/asciinema/a2gif/).
+You can use a2gif
+through [official a2gif Docker image](https://hub.docker.com/r/asciinema/a2gif/)
+(automated build on Docker Hub from this repository).
 
 Pull the image:
 
