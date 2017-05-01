@@ -27,7 +27,8 @@ RUN apt-get update && \
       imagemagick \
       libfontconfig1 \
       nodejs \
-      ttf-bitstream-vera
+      ttf-bitstream-vera && \
+    rm -rf /var/lib/apt/lists/*
 
 ARG PHANTOMJS_VERSION=2.1.1
 
