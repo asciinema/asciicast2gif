@@ -1,5 +1,5 @@
 {
-  "name": "a2gif",
+  "name": "asciicast2gif",
   "version": "0.1.0",
   "description": "asciinema GIF generator",
   "main": "main.js",
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asciinema/a2gif.git"
+    "url": "git+https://github.com/asciinema/asciicast2gif.git"
   },
   "author": "Marcin Kulik",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/asciinema/a2gif/issues"
+    "url": "https://github.com/asciinema/asciicast2gif/issues"
   },
-  "homepage": "https://github.com/asciinema/a2gif#readme"
+  "homepage": "https://github.com/asciinema/asciicast2gif#readme"
 }

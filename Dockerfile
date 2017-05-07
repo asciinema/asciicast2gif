@@ -41,7 +41,7 @@ RUN wget --quiet -O /usr/local/bin/lein https://raw.githubusercontent.com/techno
 
 ARG LEIN_ROOT=yes
 
-# build a2gif
+# build asciicast2gif
 
 RUN mkdir /app
 WORKDIR /app
@@ -60,4 +60,4 @@ RUN lein cljsbuild once main && lein cljsbuild once page
 WORKDIR /data
 VOLUME ["/data"]
 
-ENTRYPOINT ["/app/a2gif"]
+ENTRYPOINT ["/app/asciicast2gif"]

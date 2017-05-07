@@ -18,7 +18,7 @@
 (def child-process (nodejs/require "child_process"))
 (def env (.-env nodejs/process))
 
-(def renderer-html-path (.resolve path (js* "__dirname") "page" "a2gif.html"))
+(def renderer-html-path (.resolve path (js* "__dirname") "page" "asciicast2gif.html"))
 (def renderer-js-path (.resolve path (js* "__dirname") "renderer.js"))
 
 (defn- parse-json [json]
