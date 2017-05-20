@@ -43,7 +43,7 @@ WORKDIR /app
 COPY package.json /app/
 RUN npm install
 
-COPY a2gif /app/
+COPY asciicast2gif /app/
 COPY renderer.js /app/
 COPY page /app/page
 COPY --from=0 /app/main.js /app/
