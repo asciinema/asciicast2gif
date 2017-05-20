@@ -1,4 +1,4 @@
-(defproject a2gif "0.1.0-SNAPSHOT"
+(defproject asciicast2gif "0.1.0-SNAPSHOT"
   :description "asciinema GIF generator"
   :url "http://example.com/FIXME"
   :license {:name "MIT"}

@@ -4,7 +4,7 @@ set -e
 
 export DEBUG=${DEBUG:-0}
 
-a2gif_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+asciicast2gif_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if ! type "node" >/dev/null 2>&1; then
     echo "error: Node.js not installed? Executable 'node' not found"
@@ -21,13 +21,13 @@ if ! type "gifsicle" >/dev/null 2>&1; then
     exit 1
 fi
 
-if [[ ! -f "${a2gif_dir}/main.js" ]]; then
-    echo "error: ${a2gif_dir}/main.js not found. Build it with: lein cljsbuild once main"
+if [[ ! -f "${asciicast2gif_dir}/main.js" ]]; then
+    echo "error: ${asciicast2gif_dir}/main.js not found. Build it with: lein cljsbuild once main"
     exit 1
 fi
 
-if [[ ! -f "${a2gif_dir}/page/page.js" ]]; then
-    echo "error: ${a2gif_dir}/page/page.js not found. Build it with: lein cljsbuild once page"
+if [[ ! -f "${asciicast2gif_dir}/page/page.js" ]]; then
+    echo "error: ${asciicast2gif_dir}/page/page.js not found. Build it with: lein cljsbuild once page"
     exit 1
 fi
 
@@ -68,7 +68,16 @@ done
 shift $((OPTIND-1))
 
 if (($# != 2)); then
-    echo "usage: a2gif [-t theme] [-s speed] [-S scale] [-w columns] [-h rows] <input-json-path-or-url> <output-gif-path>"
+    echo "asciicast2gif - Generate GIF animations from asciicasts (asciinema recordings)"
+    echo
+    echo "usage: asciicast2gif [-t theme] [-s speed] [-S scale] [-w columns] [-h rows] <input-json-path-or-url> <output-gif-path>"
+    echo
+    echo "options:"
+    echo "  -t <theme>        color theme, one of: asciinema, tango, solarized-dark, solarized-light, monokai (default: asciinema)"
+    echo "  -s <speed>        animation speed (default: 1)"
+    echo "  -S <scale>        image scale / pixel density (default: 2)"
+    echo "  -w <columns>      clip terminal to specified number of columns (width)"
+    echo "  -h <rows>         clip terminal to specified number of rows (height)"
     exit 1
 fi
 
@@ -80,12 +89,12 @@ if [[ -n $height ]]; then
     export HEIGHT=$height
 fi
 
-tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'a2gif-tmp')
+tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'asciicast2gif-tmp')
 trap 'rm -rf $tmp_dir' EXIT
 
 node \
     $NODE_OPTS \
-    "${a2gif_dir}/main.js" \
+    "${asciicast2gif_dir}/main.js" \
     "${1}" \
     "${2}" \
     "${tmp_dir}" \

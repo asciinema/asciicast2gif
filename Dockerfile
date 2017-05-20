@@ -52,4 +52,4 @@ COPY --from=0 /app/page/page.js /app/page/
 WORKDIR /data
 VOLUME ["/data"]
 
-ENTRYPOINT ["/app/a2gif"]
+ENTRYPOINT ["/app/asciicast2gif"]
