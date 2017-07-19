@@ -140,8 +140,8 @@
   (go
     (let [[url out-path tmp-dir theme speed scale] args
           speed (js/parseFloat speed)
-          forced-width (.-WIDTH env)
-          forced-height (.-HEIGHT env)
+          forced-width (aget env "WIDTH")
+          forced-height (aget env "HEIGHT")
           {:keys [width height frames]} (<? (load-asciicast url))
           width (or forced-width width)
           height (or forced-height height)
