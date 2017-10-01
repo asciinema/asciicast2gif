@@ -8,6 +8,7 @@ RUN lein deps
 
 COPY asciinema-player /app/asciinema-player
 COPY src /app/src
+COPY externs /app/externs
 RUN lein cljsbuild once main && lein cljsbuild once page
 
 FROM ubuntu:16.04
