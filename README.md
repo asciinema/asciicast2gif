@@ -90,14 +90,14 @@ speed, double pixel density, asciinema theme):
 
     asciicast2gif https://asciinema.org/a/118274.json demo.gif
 
-![example gif 1](https://www.dropbox.com/s/2na3leplqst84ne/demo-1.gif?dl=1)
+![example gif 1](https://s3.eu-central-1.amazonaws.com/sickill/github/asciicast2gif/demo-1.gif)
 
 Example of generating GIF from local asciicast file, with Solarized Dark theme,
 double speed (`-s 2`), single pixel density (`-S 1`):
 
     asciicast2gif -t solarized-dark -s 2 -S 1 118274.json demo.gif
 
-![example gif 2](https://www.dropbox.com/s/u9h5ssphedpndvm/demo-2.gif?dl=1)
+![example gif 2](https://s3.eu-central-1.amazonaws.com/sickill/github/asciicast2gif/demo-2.gif)
 
 ### Debugging
 
