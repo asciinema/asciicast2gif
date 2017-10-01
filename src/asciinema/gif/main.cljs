@@ -16,6 +16,7 @@
 (def phantomjs (nodejs/require "phantomjs-prebuilt"))
 (def path (nodejs/require "path"))
 (def child-process (nodejs/require "child_process"))
+(def zlib (nodejs/require "zlib"))
 (def env (.-env nodejs/process))
 
 (def renderer-html-path (.resolve path (js* "__dirname") "page" "asciicast2gif.html"))
@@ -33,18 +34,25 @@
 
 (defn- http-get [url ch]
   (let [proto (-> url (str/split #":") first)
+        gunzip (.createGunzip zlib)
         client (nodejs/require proto)]
     (.get client url (fn [res]
                        (let [status (.-statusCode res)]
                          (if (contains? #{301 302} status)
                            (let [url (-> res .-headers (aget "location"))]
                              (http-get url ch))
-                           (let [data (atom "")]
-                             (.setEncoding res "utf8")
-                             (.on res "data" (fn [chunk]
-                                               (swap! data str chunk)))
-                             (.on res "end" (fn []
-                                              (put! ch @data))))))))))
+                           (let [data (atom "")
+                                 encoding (-> res .-headers (aget "content-encoding"))
+                                 stream (if (= encoding "gzip")
+                                          (do
+                                            (.pipe res gunzip)
+                                            gunzip)
+                                          res)]
+                             (.setEncoding stream "utf8")
+                             (.on stream "data" (fn [chunk]
+                                                  (swap! data str chunk)))
+                             (.on stream "end" (fn []
+                                                 (put! ch @data))))))))))
 
 (defn- read-file [path ch]
   (let [data (.readFileSync fs path "utf8")]
