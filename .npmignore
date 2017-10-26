@@ -1,0 +1,10 @@
+asciinema-player
+externs
+target
+src
+Dockerfile
+Makefile
+*.cljs
+*.clj
+*.gif
+*.json
