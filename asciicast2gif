@@ -8,7 +8,7 @@ path_to_self="${BASH_SOURCE[0]}"
 
 # Detect path
 if [ -L "$path_to_self" ]; then
-    asciicast2gif_dir="$(dirname "$(readlink "$path_to_self")")"
+    asciicast2gif_dir="$(cd "$(dirname "$path_to_self")"/"$(dirname "$(readlink "$path_to_self")")" && pwd)"
 else
     asciicast2gif_dir="$(cd "$(dirname "$path_to_self")" && pwd)"
 fi
