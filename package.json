@@ -4,10 +4,12 @@
   "description": "asciinema GIF generator",
   "main": "main.js",
   "bin": {
-    "asciicast2gif": "asciicast2gif"
+    "asciicast2gif": "asciicast2gif.js"
   },
   "dependencies": {
-    "phantomjs-prebuilt": "^2.1.14"
+    "meow": "^3.7.0",
+    "phantomjs-prebuilt": "^2.1.14",
+    "tmp": "^0.0.33"
   },
   "devDependencies": {},
   "scripts": {
