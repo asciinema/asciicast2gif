@@ -31,7 +31,6 @@ function fileExists(path) {
     }
 }
 
-commandExists('Node.js', 'node')
 commandExists('ImageMagick', 'convert')
 commandExists('gifsicle', 'gifsicle')
 fileExists('./main.js')
