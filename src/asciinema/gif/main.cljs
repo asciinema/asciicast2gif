@@ -2,7 +2,7 @@
   (:require [cljs.nodejs :as nodejs]
             [asciinema.gif.helpers :refer [safe-map]]
             [asciinema.gif.log :as log]
-            [asciinema.player.source :as source]
+            [asciinema.player.asciicast :as asciicast]
             [asciinema.player.frames :as frames]
             [asciinema.player.screen :as screen]
             [cljs.core.async :refer [<! put! chan]]
@@ -21,11 +21,6 @@
 
 (def renderer-html-path (.resolve path (js* "__dirname") "page" "asciicast2gif.html"))
 (def renderer-js-path (.resolve path (js* "__dirname") "renderer.js"))
-
-(defn- parse-json [json]
-  (-> json
-      JSON.parse
-      (js->clj :keywordize-keys true)))
 
 (defn- to-json [obj]
   (-> obj
@@ -60,7 +55,7 @@
 
 (defn- load-asciicast [url]
   (log/info (str "Loading " url "..."))
-  (let [ch (chan 1 (safe-map (comp source/initialize-asciicast parse-json)))]
+  (let [ch (chan 1 (safe-map asciicast/load))]
     (if (str/starts-with? url "http")
       (http-get url ch)
       (read-file url ch))

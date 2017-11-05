@@ -13,15 +13,15 @@
 
   :plugins [[lein-cljsbuild "1.1.6"]]
 
-  :source-paths ["src" "asciinema-player/src"]
-  :resource-paths ["resources" "asciinema-player/resources"]
+  :source-paths ["src" "asciinema-player/src" "asciinema-player/vt/src"]
+  :resource-paths ["resources" "asciinema-player/resources" "asciinema-player/vt/resources"]
 
   :clean-targets ^{:protect false} ["target" "main.js" "page/page.js"]
 
   :cljsbuild {:builds {:main {:source-paths ["src"]
                               :compiler {:output-to "main.js"
-                                         :foreign-libs [{:file "public/codepoint-polyfill.js"
-                                                         :provides ["asciinema.player.codepoint-polyfill"]}]
+                                         :foreign-libs [{:file "codepoint-polyfill.js"
+                                                         :provides ["asciinema.vt.codepoint-polyfill"]}]
                                          :optimizations :advanced
                                          :pretty-print false
                                          :elide-asserts true
@@ -30,8 +30,8 @@
                                          :main "asciinema.gif.main"}}
                        :page {:source-paths ["src"]
                               :compiler {:output-to "page/page.js"
-                                         :foreign-libs [{:file "public/codepoint-polyfill.js"
-                                                         :provides ["asciinema.player.codepoint-polyfill"]}]
+                                         :foreign-libs [{:file "codepoint-polyfill.js"
+                                                         :provides ["asciinema.vt.codepoint-polyfill"]}]
                                          :optimizations :advanced
                                          :pretty-print false
                                          :elide-asserts true
