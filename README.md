@@ -28,8 +28,52 @@ GIF file.
 ## Installation
 
 Due to the multitude of build time and runtime dependencies the easiest (and
-recommended) way to use asciicast2gif is through [asciicast2gif Docker image](#docker-image). If
-you'd rather build it yourself then follow the instructions below.
+recommended) way to use asciicast2gif is through [asciicast2gif Docker
+image](#docker-image). You can also `npm install` it or build it from source.
+
+### Docker image
+
+You can use asciicast2gif through [official asciicast2gif Docker
+image](https://hub.docker.com/r/asciinema/asciicast2gif/) (automated build on
+Docker Hub from this repository).
+
+Pull the image:
+
+    docker pull asciinema/asciicast2gif
+
+Use it like this:
+
+    docker run --rm -v $PWD:/data asciinema/asciicast2gif [options and arguments...]
+
+You need to mount some local directory at `/data` so input and output files can
+be accessed by the container. Mounting current working directory (`$PWD`) makes
+most sense in majority of cases.
+
+For example, generating GIF from local file, with double speed and Solarized
+theme:
+
+    docker run --rm -v $PWD:/data asciinema/asciicast2gif -s 2 -t solarized-dark demo.json demo.gif
+
+Running the above, long command can get old very quickly. Creating a shell alias
+may be a good idea:
+
+    alias asciicast2gif='docker run --rm -v $PWD:/data asciinema/asciicast2gif'
+
+Look at [general usage instructions](#usage) below for all command line
+arguments, options etc.
+
+### npm package
+
+To install asciicast2gif using `npm` run:
+
+    npm install asciicast2gif
+
+Following runtime dependencies need to be also installed:
+
+- [ImageMagick](http://www.imagemagick.org/)
+- [gifsicle](https://www.lcdf.org/gifsicle/)
+
+### Building from source
 
 Clone the repository:
 
@@ -39,7 +83,7 @@ Clone the repository:
 All further commands are assumed to be called from within the checked out
 directory.
 
-### Install build time dependencies
+#### Install build time dependencies
 
 Both Node.js script (`main.js`) and page script used by renderer's HTML page
 (`page/page.js`) need to be build from
@@ -49,7 +93,7 @@ You need
 [Java 8 JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 and [Leiningen](https://leiningen.org/#install).
 
-### Install runtime dependencies
+#### Install runtime dependencies
 
 Following runtime dependencies need to be installed:
 
@@ -67,7 +111,7 @@ automatically downloaded during
 [phantomjs-prebuilt](https://www.npmjs.com/package/phantomjs-prebuilt)
 package installation.
 
-### Build
+#### Build
 
 To build the scripts run:
 
@@ -114,37 +158,6 @@ environment variable.
 Limit Node's heap size to 512 MB:
 
     NODE_OPTS="--max-old-space-size=512" asciicast2gif ...
-
-## Docker image
-
-You can use asciicast2gif
-through [official asciicast2gif Docker image](https://hub.docker.com/r/asciinema/asciicast2gif/)
-(automated build on Docker Hub from this repository).
-
-Pull the image:
-
-    docker pull asciinema/asciicast2gif
-
-Use it like this:
-
-    docker run --rm -v $PWD:/data asciinema/asciicast2gif [options and arguments...]
-
-You need to mount some local directory at `/data` so input and output files can
-be accessed by the container. Mounting current working directory (`$PWD`) makes
-most sense in majority of cases.
-
-For example, generating GIF from local file, with double speed and Solarized
-theme:
-
-    docker run --rm -v $PWD:/data asciinema/asciicast2gif -s 2 -t solarized-dark demo.json demo.gif
-
-Running the above, long command can get old very quickly. Creating a shell alias
-may be a good idea:
-
-    alias asciicast2gif='docker run --rm -v $PWD:/data asciinema/asciicast2gif'
-
-Look at [general usage instructions](#usage) above for all command line
-arguments, options etc.
 
 ## Alternatives
 
