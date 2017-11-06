@@ -3,11 +3,16 @@
   "version": "0.1.0",
   "description": "asciinema GIF generator",
   "main": "main.js",
+  "bin": {
+    "asciicast2gif": "asciicast2gif"
+  },
   "dependencies": {
     "phantomjs-prebuilt": "^2.1.14"
   },
   "devDependencies": {},
   "scripts": {
+    "build": "lein cljsbuild once main; lein cljsbuild once page",
+    "watch": "lein cljsbuild auto",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
