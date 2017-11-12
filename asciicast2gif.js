@@ -3,7 +3,7 @@
 const meow = require('meow')
 const tmp = require('tmp')
 const { statSync } = require('fs')
-const { execSync, execFile } = require('child_process')
+const { execSync, spawn } = require('child_process')
 
 tmp.setGracefulCleanup();
 
@@ -84,17 +84,10 @@ if (height != "") {
 const tmpobj = tmp.dirSync({ unsafeCleanup: true, template: '/tmp/asciicast2gif-XXXXXX' });
 const tempdir = tmpobj.name
 
-console.log("\x1b[32m==> \x1b[0mStarting up...")
-
-const child = execFile('./main.js', [input, output, tempdir, theme, speed, scale], (error, stdout, stderr) => {
-    if (error) {
-        console.error('Error on execFile ./main.js:', error)
-    }
-    console.log(stdout)
-    console.log(stderr)
-});
+const child = spawn('./main.js', [input, output, tempdir, theme, speed, scale], { stdio: 'inherit' });
 
 child.on('close', (exitCode, signal) => {
     tmpobj.removeCallback();
     console.log("\x1b[32m==> \x1b[0mDone.")
+    process.exit(exitCode);
 });
