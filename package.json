@@ -20,6 +20,9 @@
     "url": "git+https://github.com/asciinema/asciicast2gif.git"
   },
   "author": "Marcin Kulik",
+  "contributors": [
+    "Sebastian Schmidt (https://github.com/publicarray)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/asciinema/asciicast2gif/issues"
