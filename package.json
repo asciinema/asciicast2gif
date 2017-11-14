@@ -1,6 +1,6 @@
 {
   "name": "asciicast2gif",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "asciinema GIF generator",
   "main": "main.js",
   "bin": {
