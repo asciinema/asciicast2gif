@@ -15,6 +15,15 @@
     "watch": "lein cljsbuild auto",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "asciicast2gif",
+    "main.js",
+    "page/asciicast2gif.html",
+    "page/asciinema-player.css",
+    "page/fontfaceonload.js",
+    "page/page.js",
+    "renderer.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asciinema/asciicast2gif.git"
