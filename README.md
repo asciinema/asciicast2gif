@@ -165,6 +165,7 @@ There are following alternative tools solving this problem:
 
 - [tav/asciinema2gif](https://github.com/tav/asciinema2gif)
 - [pettarin/asciicast2gif](https://github.com/pettarin/asciicast2gif)
+- [anishkny/webgif](https://github.com/anishkny/webgif)
 
 ## License
 
