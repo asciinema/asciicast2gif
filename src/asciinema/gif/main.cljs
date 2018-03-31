@@ -150,7 +150,8 @@
           height (or forced-height height)
           renderer (spawn-phantomjs renderer-js-path renderer-html-path width height theme scale)
           xf (frames/accelerate-xf speed)
-          delays-and-paths (gen-image-frames renderer tmp-dir (sequence xf frames))]
+          frames (frames/at-hz 15 (fn [s1 s2] s2) (sequence xf frames))
+          delays-and-paths (gen-image-frames renderer tmp-dir frames)]
       (close-stdin renderer)
       (<? (wait-for-exit renderer))
       (gen-gif delays-and-paths out-path))))
