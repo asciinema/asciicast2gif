@@ -3,15 +3,15 @@
   :url "http://example.com/FIXME"
   :license {:name "MIT"}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.671"]
-                 [org.clojure/core.async "0.3.442"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.10.238"]
+                 [org.clojure/core.async "0.4.474"]
                  [prismatic/schema "1.1.6"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [cljsjs/nodejs-externs "1.0.4-1"]
                  [reagent "0.7.0"]]
 
-  :plugins [[lein-cljsbuild "1.1.6"]]
+  :plugins [[lein-cljsbuild "1.1.7"]]
 
   :source-paths ["src" "asciinema-player/src" "asciinema-player/vt/src"]
   :resource-paths ["resources" "asciinema-player/resources" "asciinema-player/vt/resources"]
