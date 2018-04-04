@@ -126,7 +126,7 @@
 (defn- full-cmd [args out-path]
   (str "convert -loop 0 "
        (str/join " " args)
-       " -layers Optimize gif:- | gifsicle -k 32 -O2 -Okeep-empty -o "
+       " -layers Optimize gif:- | gifsicle -k 64 -O2 -Okeep-empty -o "
        out-path
        " -"))
 
