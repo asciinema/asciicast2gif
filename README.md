@@ -165,7 +165,7 @@ There are following alternative tools solving this problem:
 
 - [tav/asciinema2gif](https://github.com/tav/asciinema2gif)
 - [pettarin/asciicast2gif](https://github.com/pettarin/asciicast2gif)
-- [anishkny/webgif](https://github.com/anishkny/webgif) - `npm i -g webgif && webgif https://asciinema.org/a/147023?t=0`
+- [anishkny/webgif](https://github.com/anishkny/webgif) - `npm i -g webgif && webgif -u https://asciinema.org/a/147023?t=0`
 
 ## License
 
