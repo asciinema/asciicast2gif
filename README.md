@@ -74,7 +74,7 @@ To install asciicast2gif using `npm` run:
 Following runtime dependencies need to be also installed:
 
 - [ImageMagick](http://www.imagemagick.org/)
-- [gifsicle](https://www.lcdf.org/gifsicle/)
+- [giflossy](https://github.com/kornelski/giflossy) (or [gifsicle](https://www.lcdf.org/gifsicle/))
 
 ### Building from source
 
@@ -103,7 +103,7 @@ Following runtime dependencies need to be installed:
 - [Node.js](https://nodejs.org/en/)
 - [PhantomJS](http://phantomjs.org/) (optional, see below)
 - [ImageMagick](http://www.imagemagick.org/)
-- [giflossy](https://github.com/kornelski/giflossy) or [gifsicle](https://www.lcdf.org/gifsicle/)
+- [giflossy](https://github.com/kornelski/giflossy) (or [gifsicle](https://www.lcdf.org/gifsicle/))
 
 Install Node.js wrapper for PhantomJS:
 
