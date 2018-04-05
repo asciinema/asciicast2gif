@@ -13,6 +13,13 @@ RUN lein cljsbuild once main && lein cljsbuild once page
 
 FROM ubuntu:16.04
 
+RUN apt-get update && apt-get install -y wget build-essential automake
+RUN wget https://github.com/kornelski/giflossy/archive/1.91.tar.gz
+RUN tar xzf 1.91.tar.gz
+RUN cd giflossy-1.91 && autoreconf -i && ./configure --disable-gifview && make && make install
+
+FROM ubuntu:16.04
+
 ARG DEBIAN_FRONTEND=noninteractive
 ARG NODE_VERSION=node_6.x
 ARG DISTRO=xenial
@@ -24,7 +31,6 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y \
       bzip2 \
-      gifsicle \
       imagemagick \
       libfontconfig1 \
       nodejs \
@@ -49,6 +55,7 @@ COPY renderer.js /app/
 COPY page /app/page
 COPY --from=0 /app/main.js /app/
 COPY --from=0 /app/page/page.js /app/page/
+COPY --from=1 /usr/local/bin/gifsicle /usr/local/bin/
 
 WORKDIR /data
 VOLUME ["/data"]
