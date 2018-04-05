@@ -96,6 +96,10 @@ if [[ -n $height ]]; then
     export HEIGHT=$height
 fi
 
+if [[ -z $GIFSICLE_OPTS ]]; then
+    export GIFSICLE_OPTS="-k 64 -O2 -Okeep-empty"
+fi
+
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'asciicast2gif-tmp')
 trap 'rm -rf $tmp_dir' EXIT
 

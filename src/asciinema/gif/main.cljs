@@ -123,16 +123,20 @@
        (map reverse)
        (mapcat single-frame-args)))
 
-(defn- full-cmd [args out-path]
+(defn- full-cmd [args out-path gifsicle-opts]
   (str "convert -loop 0 "
        (str/join " " args)
-       " -layers Optimize gif:- | gifsicle -k 64 -O2 -Okeep-empty -o "
+       " -layers Optimize gif:- | gifsicle "
+       gifsicle-opts
+       " -o "
        out-path
        " -"))
 
-(defn- gen-gif [delays-and-paths out-path]
-  (log/info "Combining screenshots into GIF file...")
-  (let [cmd (-> delays-and-paths all-frame-args (full-cmd out-path))]
+(defn- gen-gif [delays-and-paths out-path gifsicle-opts]
+  (log/info (str "Combining "
+                 (count delays-and-paths)
+                 " screenshots into GIF file..."))
+  (let [cmd (-> delays-and-paths all-frame-args (full-cmd out-path gifsicle-opts))]
     (log/debug "Executing:" cmd)
     (shell cmd)))
 
@@ -145,6 +149,7 @@
           speed (js/parseFloat speed)
           forced-width (aget env "WIDTH")
           forced-height (aget env "HEIGHT")
+          gifsicle-opts (aget env "GIFSICLE_OPTS")
           {:keys [width height frames]} (<? (load-asciicast url))
           width (or forced-width width)
           height (or forced-height height)
@@ -154,6 +159,6 @@
           delays-and-paths (gen-image-frames renderer tmp-dir frames)]
       (close-stdin renderer)
       (<? (wait-for-exit renderer))
-      (gen-gif delays-and-paths out-path))))
+      (gen-gif delays-and-paths out-path gifsicle-opts))))
 
 (set! *main-cli-fn* -main)
