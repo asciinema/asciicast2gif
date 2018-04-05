@@ -98,6 +98,10 @@ fi
 
 if [[ -z $GIFSICLE_OPTS ]]; then
     export GIFSICLE_OPTS="-k 64 -O2 -Okeep-empty"
+
+    if gifsicle -h 2>/dev/null | grep -q lossy; then
+        export GIFSICLE_OPTS="$GIFSICLE_OPTS --lossy=80"
+    fi
 fi
 
 tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'asciicast2gif-tmp')
