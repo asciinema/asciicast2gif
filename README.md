@@ -62,6 +62,9 @@ may be a good idea:
 Look at [general usage instructions](#usage) below for all command line
 arguments, options etc.
 
+Note: if you want to override gifsicle options (via `GIFSICLE_OPTS` env var)
+when using Docker image you need to pass it via Docker's `-e` option.
+
 ### npm package
 
 To install asciicast2gif using `npm` run:
@@ -100,7 +103,7 @@ Following runtime dependencies need to be installed:
 - [Node.js](https://nodejs.org/en/)
 - [PhantomJS](http://phantomjs.org/) (optional, see below)
 - [ImageMagick](http://www.imagemagick.org/)
-- [gifsicle](https://www.lcdf.org/gifsicle/)
+- [giflossy](https://github.com/kornelski/giflossy) or [gifsicle](https://www.lcdf.org/gifsicle/)
 
 Install Node.js wrapper for PhantomJS:
 
@@ -142,6 +145,23 @@ double speed (`-s 2`), single pixel density (`-S 1`):
     asciicast2gif -t solarized-dark -s 2 -S 1 118274.json demo.gif
 
 ![example gif 2](https://s3.eu-central-1.amazonaws.com/sickill/github/asciicast2gif/demo-2.gif)
+
+### Setting custom gifsicle options
+
+You can override default options passed to giflossy/gifsicle by setting
+`GIFSICLE_OPTS` environment variable.
+
+Default options when giflossy is installed are:
+
+    -k 64 -O2 -Okeep-empty --lossy=80
+
+Default options when gifsicle is installed are:
+
+    -k 64 -O2 -Okeep-empty
+
+For example to generate 16 color gif, with level 3 optimizations, set it like this:
+
+    GIFSICLE_OPTS="-k 16 -O3"
 
 ### Debugging
 
