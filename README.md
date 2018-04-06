@@ -183,9 +183,10 @@ Limit Node's heap size to 512 MB:
 
 There are following alternative tools solving this problem:
 
-- [tav/asciinema2gif](https://github.com/tav/asciinema2gif)
-- [pettarin/asciicast2gif](https://github.com/pettarin/asciicast2gif)
-- [anishkny/webgif](https://github.com/anishkny/webgif) - `npm i -g webgif && webgif -u https://asciinema.org/a/147023?t=0`
+- [marionebl/svg-term-cli](https://github.com/marionebl/svg-term-cli/) - generates animated SVG from local or asciinema.org hosted asciicast
+- [tav/asciinema2gif](https://github.com/tav/asciinema2gif) - generates animated GIF from asciinema.org hosted asciicast
+- [pettarin/asciicast2gif](https://github.com/pettarin/asciicast2gif) - generates animated GIF from local asciicast
+- [anishkny/webgif](https://github.com/anishkny/webgif) - generates animated GIF from any website: `npm i -g webgif && webgif -u https://asciinema.org/a/147023?t=0`
 
 ## License
 
