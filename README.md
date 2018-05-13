@@ -69,7 +69,7 @@ when using Docker image you need to pass it via Docker's `-e` option.
 
 To install asciicast2gif using `npm` run:
 
-    npm install asciicast2gif
+    npm install --global asciicast2gif
 
 Following runtime dependencies need to be also installed:
 
