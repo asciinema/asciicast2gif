@@ -27,9 +27,19 @@ GIF file.
 
 ## Installation
 
-Due to the multitude of build time and runtime dependencies the easiest (and
-recommended) way to use asciicast2gif is through [asciicast2gif Docker
-image](#docker-image). You can also `npm install` it or build it from source.
+You can install asciicast2gif with `npm`, use it via Docker image, or build it
+from source.
+
+### npm package
+
+To install asciicast2gif using `npm` run:
+
+    npm install --global asciicast2gif
+
+Following runtime dependencies need to be also installed:
+
+- [ImageMagick](http://www.imagemagick.org/)
+- [giflossy](https://github.com/kornelski/giflossy) (or [gifsicle](https://www.lcdf.org/gifsicle/))
 
 ### Docker image
 
@@ -64,17 +74,6 @@ arguments, options etc.
 
 Note: if you want to override gifsicle options (via `GIFSICLE_OPTS` env var)
 when using Docker image you need to pass it via Docker's `-e` option.
-
-### npm package
-
-To install asciicast2gif using `npm` run:
-
-    npm install --global asciicast2gif
-
-Following runtime dependencies need to be also installed:
-
-- [ImageMagick](http://www.imagemagick.org/)
-- [giflossy](https://github.com/kornelski/giflossy) (or [gifsicle](https://www.lcdf.org/gifsicle/))
 
 ### Building from source
 
