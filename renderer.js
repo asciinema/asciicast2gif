@@ -119,7 +119,7 @@ page.open(pageUrl, function(status) {
       success: initTerminal,
       error: function() {
         console.log('Failed to pre-load Powerline Symbols font');
-        window.callPhantom({ rect: undefined });
+        initTerminal();
       },
       timeout: 1000
     });
