@@ -75,6 +75,10 @@ arguments, options etc.
 Note: if you want to override gifsicle options (via `GIFSICLE_OPTS` env var)
 when using Docker image you need to pass it via Docker's `-e` option.
 
+Note: If you get a "permission denied" error when writing the .gif file, you are most
+likely running into [this](https://stackoverflow.com/a/31334443), and just need to add
+`:z` to the volume spec, eg `-v $PWD:/data:z`.
+
 ### Building from source
 
 Clone the repository:
