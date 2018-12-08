@@ -7,7 +7,7 @@
     "asciicast2gif": "asciicast2gif"
   },
   "dependencies": {
-    "phantomjs-prebuilt": "^2.1.14"
+    "phantomjs-prebuilt": "^2.1.16"
   },
   "devDependencies": {},
   "scripts": {
