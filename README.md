@@ -1,3 +1,11 @@
+**This project is no longer maintained.**
+
+**In the end the approach it took didn't work well in many cases and it was hard to optimize further. Therefore I won't be putting any more work into it.**
+
+**See its successor instead: https://github.com/asciinema/agg** 
+
+---
+
 # asciicast2gif
 
 asciicast2gif is a tool for generating GIF animations from
